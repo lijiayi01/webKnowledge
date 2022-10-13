@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+</body>
+<script>
+var startTime = new Date().getTime()
+var endTime = 0
+var total = 0;
+var speed = 0
+var xhr = new window.XMLHttpRequest();
+var url = 'https://imgservices-1252317822.image.myqcloud.com/image/20191017/llpf9axb5z.png';
+xhr.open('GET', url);
+xhr.onprogress = function (event) {
+    // event.loaded是已经加载的
+    // event.total是总大小
+    console.log(event)
+    total = event.total; // 单位： 字节
+};
+xhr.onload = function () {
+    // 加载成功
+    console.log('加载成功')
+    endTime = new Date().getTime()
+    var useTime = (endTime - startTime) / 1000;
+    var fileSize = (total / 1024 / 1024).toFixed(2)
+    speed =  fileSize /useTime
+    console.log('消耗时间', useTime, '文件大小', fileSize, '传输速率', speed)
+};
+xhr.onloadend = function () {
+    // 无论成功还是失败
+    console.log('加载完成')
+    console.log(xhr.status)
+};
+xhr.onerror = function(e){
+    console.log(e, '失败')
+}
+xhr.send();
+
+
+</script>
+</html>
